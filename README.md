@@ -30,4 +30,4 @@ MorphOS (ppc) WarpOS (m68k/ppc) Windows (x86) Windows (x64)
 
 
 ## Danksagung: 
-Vielen Dank an *Oliver Schwald*, der mit die Listings von F. Brall "Imbiss-Bude" aus dem Homecomputer 8/1983 sowie seiner C64 Implementation aus dem Homecomputer 10/1984 eingescannt und geschickt hat!
+Vielen Dank an **Oliver Schwald**, der mit die Listings von F. Brall "Imbiss-Bude" aus dem Homecomputer 8/1983 sowie seiner C64 Implementation aus dem Homecomputer 10/1984 eingescannt und geschickt hat!
