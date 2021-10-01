@@ -48,5 +48,7 @@ Das Gleiche gilt auch für die Bratwurst, wenn diese zu teuer angeboten wird, we
 
 ## Analyse der Spielmechanik "Imbiss" für PC von 1991
 
-## Danksagung: 
+## Danksagung 
 Vielen Dank an **Oliver Schwald**, der mit die Listings von F. Brall "Imbiss-Bude" aus dem Homecomputer 8/1983 sowie seiner C64 Implementation aus dem Homecomputer 10/1984 eingescannt und geschickt hat! Vielen Dank an **Thomas Bauer**, für die vielen interessante Information und Anekdoten zu seiner PC Version von 1991 und dessen Entstehung. 
+
+## Literatur & Links 
