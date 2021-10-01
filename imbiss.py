@@ -3,15 +3,24 @@
 Created on Wed Sep 29 21:41:02 - 00:10:00 2021   ;) 
 @author: Steinheilig
 
-Dieses Program ist eine 1:1 Implementation (der Spielmechanik) von 
+Dieses Programm ist eine 1:1 Implementation (der Spielmechanik) von 
 "Imbiss-Bude" von F. Brall 1983 für Apple II, Homecomputer 8/1983, S. 37-41
-"Imbiss" von O.Schwald 1984 für Commodore C64, Homecomputer 10/1984, S. 55-58 
+"Imbiss" von O. Schwald 1984 für Commodore C64, Homecomputer 10/1984, S. 55-58 
 
-Exploits der Spielmechanik für diese Spielversion:
+Dieses Program ist eine Reproduktion der Spielmechanik von 
+"Imbiss" v. 5.4 von T. Bauer für IBM PC, Public Domain
+
+Exploits der Spielmechanik für diese Spielversion von 1983/1984:
 1) 10% der Fälle, keine Prüfung von Eispreis => Ein Eis super billig -> EK  (nur abhängig von kleinstem Eispreis (1440))  // Anderen Eissorten Max preis wird bezahllt
 2) 10% der Fälle, keine Prüfung von Bratwurst-/Pommespreis=> Eins super billig -> BK  (nur abhängig von kleinstem Preis (1440))  // Andere Max preis wird bezahllt
 3) Kein Einfluss des Cola Preises auf Kunden (Cola Kunden sind zufällige Eiskunden) / keine Prüfung von Colapreis => Jeder Cola Preis wird bezahlt in ca. für EK/4 % Der Fälle
 
+"Bratwurst Anomalie" in der Spielversion von 1991:
+Wird der Verkaufspreis einer Ware aus einer Warengruppe zu hoch angesetzt (z.B. die Cola oder die Bratwurst), 
+werden die anderen Eltemente der Warengruppe nicht mehr nachgefragt (da es keine Kunden gibt). 
+Also können z.B. alle Eissorten beliebig billig angeboten werden, sobald die Cola mehr als X kostet, wird kein Eis mehr verkauft. 
+Das Gleiche gilt auch für die Bratwurst, wenn diese zu teuer angeboten wird, werden keine Pommes mehr verkauft.     
+    
 Spielgeschichte: 
 F. Brall    1983,   Apple II,   "Imbiss-Bude"
 O. Schwald  1984,   C64,        "Imbiss"
@@ -132,28 +141,77 @@ def Kaufen(WS,S,K):
     return K
     
 
-def Kunden_Simulation(K):
-    EK = 10  # Eis Kunden
-    ZK = 10  # Zigaretten Kunden 
-    BK = 30  # Bratwurst Kunden 
-    if T == 6:  # Samstag
-       EK = 15
-       ZK = 13
-       BK = 40
-    if T == 7:  # Sontag
-       EK = 20
-       ZK = 18
-       BK = 40
-    
-    # Berechnen der Kunden als Funktion des Preise 
-    EK -= int(np.min(V[0:2])/10)
-    ZK -= int(V[4]/100)
-    BK -= int(np.min(V[5:6])/20)
-    
-    # Temperatur Korrektur
-    EK += abs(int(TE/2))
-    BK -= abs(int(TE/2))
-    
+def Kunden_Simulation(K,Version=3):
+    """ Spielmechanik - Kunden Simulation
+
+    Args:
+      K: Kontostand vor der Simulation
+      Version: 1) "Imbiss-Bude" von F. Brall 1983 für Apple II
+               2) "Imbiss" von O. Schwald 1984 für Commodore C64
+               3) "Imbiss" von T. Bauer 1991 für PC
+
+    Returns:
+      K: Kontostand nach der Simulation
+      
+    """
+    if Version <3:
+        EK = 10  # Eis Kunden
+        ZK = 10  # Zigaretten Kunden 
+        BK = 30  # Bratwurst Kunden 
+        if T == 6:  # Samstag
+           EK = 15
+           ZK = 13
+           BK = 40
+        if T == 7:  # Sonntag
+           EK = 20
+           ZK = 18
+           BK = 40
+        
+        # Korrektur der Kunden als Funktion des Preise 
+        EK -= int(np.min(V[0:2])/10)
+        ZK -= int(V[4]/100)
+        BK -= int(np.min(V[5:6])/20)
+        
+        # Temperatur Korrektur
+        EK += abs(int(TE/2))
+        BK -= abs(int(TE/2))
+    else:
+        ##### "Imbiss" PC 1991 
+        # 5 Änderungen zum Orginal:
+        # 1) nutze max V der Warengruppe für Korrektur
+        # 2) ZK = [10,12,15], ZK Basis Wochentag/Sa/So
+        # 3) EK += 10 / andere Temperaturabhängigkeit
+        # 4) BK andere Temperaturabhängigkeit        
+        # 5) if ZK/EK/BK < 0 --> ZK/EK/BK = 0 bevor AK berechnet wird 
+        EK = 20  # Eis Kunden 
+        ZK = 10  # Zigaretten Kunden 
+        BK = 30  # Bratwurst Kunden 
+        if T == 6:  # Samstag
+           EK = 25
+           ZK = 12
+           BK = 40
+        if T == 7:  # Sonntag
+           EK = 30
+           ZK = 15
+           BK = 40
+        
+        # Korrektur der Kunden als Funktion des Preise 
+        EK -= int(np.max(V[0:2])/10)
+        ZK -= int(V[4]/100)
+        BK -= int(np.max(V[5:6])/20)
+        
+        # Temperatur Korrektur
+        EK += abs(int(TE/4))
+        BK -= abs(int(TE/3))
+        
+    # zu hoher Preis in einer Warengruppe (neg Kundenwert) führt nicht(!) zu einer Reduktion der Gesamtzahl der Kunden
+    if BK < 0:
+        BK = 0
+    if ZK < 0:
+        ZK = 0
+    if EK < 0:
+        EK = 0        
+        
     AK = ZK+BK+EK
     print('Kunden gesamt:\t\t',AK)
     print('Eis Kunden:\t\t',EK)
