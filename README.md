@@ -5,7 +5,7 @@ Das Programm **imbiss.py** ist eine 1:1 Implementation (der Spielmechanik) von <
 "Imbiss" von O. Schwald 1984 für Commodore C64, Homecomputer 10/1984, S. 55-58 <br>
 
 Darüber hinaus reproduziert das Programm die Spielmechanik von <br>
-"Imbiss" v. 5.4 von T. Bauer für IBM PC, Public Domain<br>
+"Imbiss" von T. Bauer für IBM PC, Public Domain Version v. 5.4<br>
 
 ### ToDo
 * Prüfen Eingabe 
@@ -50,6 +50,10 @@ Exploits der Spielmechanik für die Spielversionen von 1983/1984:<br>
 
 ## Optimale Verkausstrategie
 Auf Basis der Spielmechanik können optimale Verkaufstrategiene, d.h. den Gewinn maximierende Verkaufspreise der Waren als Funktion der Temperatur und des Wochentages abgeleitet werden. Vergl. **imbiss_analyse.py**.
+<!---
+![plot](./images/OptimaleBratwurstStrategie_WE.jpg))
+-->
+<img src="./images/OptimaleBratwurstStrategie_WE.jpg" width="70%">
 
 ## Analyse der Spielmechanik "Imbiss" für PC von 1991
 Auf Basis des C64 LISTINGs, kann die Spielmechanik ihrer PC Version von 1991 bestimmt werden.
