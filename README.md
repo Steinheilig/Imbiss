@@ -7,6 +7,8 @@ Das Programm **imbiss.py** ist eine 1:1 Implementation (der Spielmechanik) von <
 Darüber hinaus reproduziert das Programm die Spielmechanik von <br>
 "Imbiss" von T. Bauer für IBM PC, Public Domain Version v. 5.4<br>
 
+<img src="./images/Python_Version_Screenshot.JPG" width="60%">
+
 ### ToDo
 * Prüfen Eingabe 
 * Überspringen, wenn keine Eingabe
