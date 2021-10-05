@@ -70,10 +70,16 @@ Vielen Dank an **Oliver Schwald**, der mit die Listings von F. Brall "Imbiss-Bud
 [1] Franz Ablinger (2016), Homecomputer - Zur Technik- und frühen Computerspielkulturanhand einer Zeitschrift der Jahre 1983 und 1984, Doktorarbeit
 https://docplayer.org/44038258-Homecomputer-zur-technik-und-fruehen-computerspielkultur-anhand-einer-zeitschrift-der-jahre-1983-und-1984.html<br>
 [2] "Imbiss", PC Version von 1991, http://www.gameseller.de/mein-erstes-pc-spiel-imbiss-manager-testet-es-selbst/#more-250<br>
-[3] DOS emulator, DosBox, https://www.dosbox.com/<br>
+[3] DOS Emulator, DosBox, https://www.dosbox.com/<br>
 [4] "Imbiss", C64 Version von 1984, http://www.germanc64.de/ggames.php?c=i&s=1<br>
 [5] C64 Emulator, CCS64 3.9.2, https://www.heise.de/download/product/ccs64/download <br>
 [6] "Imbiss III", Amiga Version von 1987, https://archive.org/details/Imbiss_III_1987_Schwald_O._de_h_Pawlowski_o2 <br>
-[7] "Imbiss III", Amiga Version von 1987, Playalong Video https://youtu.be/Xo-Z71IkOe4?t=136<br>
-[8] "Tom's Imbiss", Amiga OS1.3 Version von 1994/2021 https://www.kehosoft.de/imbiss_hollywood.html <br>
-[9] "Imbiss Classic", Android von 2021, https://play.google.com/store/apps/details?id=de.minibits.imbiss_classic&hl=de&gl=US
+[7] "Tom's Imbiss", Amiga OS1.3 Version von 1994/2021 https://www.kehosoft.de/imbiss_hollywood.html <br>
+[8] "Imbiss Classic", Android von 2021, https://play.google.com/store/apps/details?id=de.minibits.imbiss_classic&hl=de&gl=US
+
+## Gameplay Videos
+* "Imbiss III", Amiga Version von 1987 https://youtu.be/Xo-Z71IkOe4?t=136<br>
+* Tom's Imbiss 1.0 Amiga 1998, https://youtu.be/7lVctKjUY9g<br>
+* Tom's Imbiss 1.0 Amiga 1998, Teil 2, https://youtu.be/4-wFfIBef5s<br>
+
+
