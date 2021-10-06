@@ -197,7 +197,7 @@ def Kunden_Simulation(K,Version=3):
            BK = 40
         
         # Korrektur der Kunden als Funktion des Preise 
-        EK -= int(np.max(V[0:3])/10)
+        EK -= int(np.max(V[0:4])/10)
         ZK -= int(V[4]/100)
         BK -= int(np.max(V[5:7])/20)
         
