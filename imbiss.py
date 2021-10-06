@@ -63,14 +63,15 @@ W = np.zeros([7,],dtype=int)   # Warenbestand
 
 def plot_intro():
     print('')
-    print('     IIIIIII     MM        M     BBbBB      IIIIIIIII      SSSSSS    SSSSSS')
+    print('     IIIIIII     MM        M     BBbBB      IIIIIIIII      SSSSSSS   SSSSSSS')
     print('       III       MMm      mM     BB  BB        III        SSS       SSS ')
-    print('       III       MM m    m M     BB   bB       III        sSS       sSS')
-    print('       III       MM  m  m  M     BBbBB         III          ssSs      sSs')
-    print('       III       MM   mMm  M     BB  BB        III            sSS      sSS')
-    print('       III       MM    m   M     BB   bB       III            SSs      SSs')
+    print('       III       MM m    m M     BB   bB       III        sS        sS')
+    print('       III       MM m    m M     BB  bB        III        sSS       sSS')
+    print('       III       MM  m  m  M     BBbBB         III          ssSs      ssSs')
+    print('       III       MM   mMm  M     BB  BB        III            sSS       sSS')
+    print('       III       MM    m   M     BB   bB       III             Ss        Ss')
     print('       III       MM        M     BB  bB        III            sSS      sSS')
-    print('     IIIIIII     MM        M     BBbBB      IIIIIIIII     SSSSss    SSSSss')
+    print('     IIIIIII     MM        M     BBbBB      IIIIIIIII    SSSSSss   SSSSSss')
     print('')
     print('  by Steinheilig (2021)')
     
