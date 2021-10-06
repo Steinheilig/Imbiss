@@ -79,7 +79,9 @@ https://docplayer.org/44038258-Homecomputer-zur-technik-und-fruehen-computerspie
 
 ## Gameplay Videos
 * "Imbiss III", Amiga Version von 1987 https://youtu.be/Xo-Z71IkOe4?t=136<br>
-* Tom's Imbiss 1.0 Amiga 1998, https://youtu.be/7lVctKjUY9g<br>
-* Tom's Imbiss 1.0 Amiga 1998, Teil 2, https://youtu.be/4-wFfIBef5s<br>
+* "Imbiss III", Amiga Version von 1987 https://youtu.be/qTg-1BV26RM<br>
+* Tom's Imbiss 1.0, Amiga 1998, https://youtu.be/7lVctKjUY9g<br>
+* Tom's Imbiss 1.0, Amiga 1998, Teil 2, https://youtu.be/4-wFfIBef5s<br>
+* Tom's Imbiss Imbiss v3.1, Amiga 2012, https://youtu.be/Eho4QnMx3Eg<br>
 
 
