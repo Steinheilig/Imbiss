@@ -169,9 +169,9 @@ def Kunden_Simulation(K,Version=3):
            BK = 40
         
         # Korrektur der Kunden als Funktion des Preise 
-        EK -= int(np.min(V[0:2])/10)
+        EK -= int(np.min(V[0:3])/10)
         ZK -= int(V[4]/100)
-        BK -= int(np.min(V[5:6])/20)
+        BK -= int(np.min(V[5:7])/20)
         
         # Temperatur Korrektur
         EK += abs(int(TE/2))
@@ -197,9 +197,9 @@ def Kunden_Simulation(K,Version=3):
            BK = 40
         
         # Korrektur der Kunden als Funktion des Preise 
-        EK -= int(np.max(V[0:2])/10)
+        EK -= int(np.max(V[0:3])/10)
         ZK -= int(V[4]/100)
-        BK -= int(np.max(V[5:6])/20)
+        BK -= int(np.max(V[5:7])/20)
         
         # Temperatur Korrektur
         EK += abs(int(TE/4))
