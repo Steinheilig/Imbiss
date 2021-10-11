@@ -64,11 +64,11 @@ Auf Basis der Spielmechanik können optimale Verkaufstrategien, d.h. den Gewinn 
 <img src="./images/OptimaleBratwurstStrategie_WE.jpg" width="70%">
 
 ## Einsatz von maschinellem Lernen um optimale Verkausstrategie zu ermitteln
-Mit Hilfe von Methoden des maschinellen Lernens können optimale Verkaufstrategien, d.h. den Gewinn maximierende Verkaufspreise der Waren als Funktion der Temperatur und des Wochentages, ermittelt werden. 
+Mit Hilfe von Methoden des maschinellen Lernens können optimale Verkaufstrategien, d.h. den Gewinn maximierende Verkaufspreise der Waren als Funktion der Temperatur und des Wochentages, ermittelt werden. In **imbiss_ML.py** werden verschiendenen Ansätze illustriert:
 1. Eine Möglichkeit ist es, ein Modell des zu erwartenden Gewinns zu trainieren. Als Grundlage dienen input/output Wertepaare, sogenannte samples. Mit einer großen Menge von solchen Wertenpaaren kann ein Modell, bzw. ein Funktionsapproximation, zwischen Input und Output trainiert werden. Im Anschluss kann ein Optimierer verwendet werden, um die besten (Gewinn maximierenden) Verkaufspreise auf Basis des Gewinnmodells zu bestimmen.
 2. Eine weitere Möglichkeit ist Methoden des sogenannte verstärkende Lernen (Reinforcement learning, RL) zu verwenden. Hierbei werden Wertefunktionen (Value Functions) für die möglichen Aktionen (Verkaufspreise) und Systemzustände (Temperatur, Wochentage) ermittelt. Als Wertefunktion wird der zu erwartenden Gewinn, gegeben der Verkaufspreise und Temperatur/Wochentag, verwendet. Auf Basis der Wertefunktion, gegeben des Systemzustandes, wählt ein sogenannter Handelnder (RL-Agent) Aktionen/Verkaufspreise nach einem vorgegeben Regelwerk (Policy) aus. Die Policy muss hierbei das Ausnutzen des in der Wertefunktion repräsentierten Wissens (Exploitation) mit einem Ausprobieren alternativer Lösungsmöglichkeiten (Exploration) ausbalanzieren. 
 3. Die Kombination der beiden ersten Ansätze, Modellaproximation des erwarteten Gewinns sowie der Einsatz von Reinforcement Learning, wobei ein tiefes neuronales Netzwerk zur Modellaproximation verwendet wird, wird als Deep Reinforcement Learning (DeepRL) bezeichnet. 
-In **imbiss_ML.py** werden die verschiendenen Ansätze illustriert. 
+
 
 
 ## Danksagung 
