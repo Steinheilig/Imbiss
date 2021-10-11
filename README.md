@@ -50,18 +50,26 @@ Exploits der Spielmechanik für die Spielversionen von 1983/1984:<br>
 2) 10% der Fälle, keine Prüfung von Bratwurst-/Pommespreis=> Eins super billig -> BK  (nur abhängig von kleinstem Preis (1440))  // Andere Max preis wird bezahllt<br>
 3) Kein Einfluss des Cola Preises auf Kunden (Cola Kunden sind zufällige Eiskunden) / keine Prüfung von Colapreis => Jeder Cola Preis wird bezahlt in ca. für EK/4 % Der Fälle<br>
 
-## Optimale Verkausstrategie
-Auf Basis der Spielmechanik können optimale Verkaufstrategiene, d.h. den Gewinn maximierende Verkaufspreise der Waren als Funktion der Temperatur und des Wochentages abgeleitet werden. Vergl. **imbiss_analyse.py**.
-<!---
-![plot](./images/OptimaleBratwurstStrategie_WE.jpg))
--->
-<img src="./images/OptimaleBratwurstStrategie_WE.jpg" width="70%">
-
 ## Analyse der Spielmechanik "Imbiss" für PC von 1991
 Auf Basis des C64 LISTINGs, kann die Spielmechanik ihrer PC Version von 1991 bestimmt werden.
 Im Prinzip ist diese sehr nah am Orginal von 1983/4 (bis auf leichte Parametervariation, z.B. Temperaturverhalten und Offset der Kundenfunktionen).
 Um den Fehler in der C64 Version zu korregieren (hier wurde das Minimum des Preises einer Warengruppe zum Bestimmen der Kundenzahl herangezogen, in Kombination mit einem Zufallsziehen aus der Warengruppe konnten Waren mit beliebig hohen Preisen verkauft werden) wird dar maximale Preis der Elemente der Warengruppe benutzt. Allerdings ensteht hierdurch die "Cola bzw. Bratwurst Anomalie". 
 Die Paramter wurden durch Auswerten des Kundenverhaltens für verschiedene Temperature, Wochentage, Verkaufspreise bestimmt. Der Quellcode lag leider nicht vor. In der Datei **imbiss_analyse.py** wird die Analyse inklusive der manuell ermittelten Daten dargelegt.
+
+## Optimale Verkausstrategie
+Auf Basis der Spielmechanik können optimale Verkaufstrategien, d.h. den Gewinn maximierende Verkaufspreise der Waren als Funktion der Temperatur und des Wochentages abgeleitet werden. Vergl. **imbiss_analyse.py**.
+<!---
+![plot](./images/OptimaleBratwurstStrategie_WE.jpg))
+-->
+<img src="./images/OptimaleBratwurstStrategie_WE.jpg" width="70%">
+
+## Einsatz von maschinellem Lernen um optimale Verkausstrategie zu ermitteln
+Mit Hilfe von Methoden des maschinellen Lernens können optimale Verkaufstrategien, d.h. den Gewinn maximierende Verkaufspreise der Waren als Funktion der Temperatur und des Wochentages, ermittelt werden. 
+1. Eine Möglichkeit ist es, ein Modell des zu erwartenden Gewinns zu trainieren. Als Grundlage dienen input/output Wertepaare, sogenannte samples. Mit einer großen Menge von solchen Wertenpaaren kann ein Modell, bzw. ein Funktionsapproximation, zwischen Input und Output trainiert werden. Im Anschluss kann ein Optimierer verwendet werden, um die besten (Gewinn maximierenden) Verkaufspreise auf Basis des Gewinnmodells zu bestimmen.
+2. Eine weitere Möglichkeit ist Methoden des sogenannte verstärkende Lernen (Reinforcement learning, RL) zu verwenden. Hierbei werden Wertefunktionen (Value Functions) für die möglichen Aktionen (Verkaufspreise) und Systemzustände (Temperatur, Wochentage) ermittelt. Als Wertefunktion wird der zu erwartenden Gewinn, gegeben der Verkaufspreise und Temperatur/Wochentag, verwendet. Auf Basis der Wertefunktion, gegeben des Systemzustandes, wählt ein sogenannter Handelnder (RL-Agent) Aktionen/Verkaufspreise nach einem vorgegeben Regelwerk (Policy) aus. Die Policy muss hierbei das Ausnutzen des in der Wertefunktion repräsentierten Wissens (Exploitation) mit einem Ausprobieren alternativer Lösungsmöglichkeiten (Exploration) ausbalanzieren. 
+3. Die Kombination der beiden ersten Ansätze, Modellaproximation des erwarteten Gewinns sowie der Einsatz von Reinforcement Learning, wobei ein tiefes neuronales Netzwerk zur Modellaproximation verwendet wird, wird als Deep Reinforcement Learning (DeepRL) bezeichnet. 
+In **imbiss_ML.py** werden die verschiendenen Ansätze illustriert. 
+
 
 ## Danksagung 
 Vielen Dank an **Oliver Schwald**, der mit die Listings von F. Brall "Imbiss-Bude" aus dem Homecomputer 8/1983 sowie seiner C64 Implementation aus dem Homecomputer 10/1984 eingescannt und geschickt hat! Vielen Dank an **Thomas Bauer**, für die vielen interessante Information und Anekdoten zu seiner PC Version von 1991 und dessen Entstehung. 
