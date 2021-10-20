@@ -33,7 +33,7 @@ iOS (arm) Linux (x86) Linux (x64)
 Linux (arm) Linux (ppc) macOS (x86) macOS (x64) macOS (ppc)
 MorphOS (ppc) WarpOS (m68k/ppc) Windows (x86) Windows (x64)
 
-## Bugs
+## Bugs: Versionen 1983/1984/1991
 * "Kaufen koste es was es wolle" in den Spielversionen von 1983/1984
 Der maximale Preis der verschiedenen Eissorten wird nicht geprüft, dadurch kann in 10% der Eiskauffälle eine Eissorte mit beliebig hohen Verkaufspreis verkauft werden.
 * "Cola Bug" in den Spielversionen von 1983/1984
@@ -44,7 +44,7 @@ werden die anderen Elemente der Warengruppe nicht mehr nachgefragt (da es keine 
 Also können z.B. alle Eissorten beliebig billig angeboten werden, sobald die Cola mehr als X(T,Wochentag) kostet, wird kein Eis mehr verkauft. 
 Das Gleiche gilt auch für die Bratwurst, wenn diese zu teuer angeboten wird, werden keine Pommes mehr verkauft.     
 
-## Exploits
+## Exploits: Versionen 1983/1984
 Exploits der Spielmechanik für die Spielversionen von 1983/1984:<br>
 1) 10% der Fälle, keine Prüfung von Eispreis => Ein Eis super billig -> EK  (nur abhängig von kleinstem Eispreis (1440))  // Anderen Eissorten max Preis wird bezahlt<br>
 2) 10% der Fälle, keine Prüfung von Bratwurst-/Pommespreis=> Eins super billig -> BK  (nur abhängig von kleinstem Preis (1440))  // Andere max Preis wird bezahlt<br>
