@@ -7,7 +7,7 @@ Das Programm **imbiss.py** ist eine 1:1 Implementation (der Spielmechanik) von <
 Darüber hinaus reproduziert das Programm die Spielmechanik von <br>
 "Imbiss" von T. Bauer für IBM PC, Public Domain Version v. 5.4<br>
 
-<img src="./images/Python_Version_Screenshot.JPG" width="60%">
+<img src="./images/Python_Version_Screenshot_v02.JPG" width="60%">
 
 ### ToDo
 * Prüfen Eingabe 
@@ -65,10 +65,9 @@ Auf Basis der Spielmechanik können optimale Verkaufsstrategien, d.h. den Gewinn
 
 ## Einsatz von maschinellem Lernen, um optimale Verkaufsstrategie zu ermitteln
 Mit Hilfe von Methoden des maschinellen Lernens können optimale Verkaufsstrategien, d.h. den Gewinn maximierende Verkaufspreise der Waren als Funktion der Temperatur und des Wochentages, ermittelt werden. In **imbiss_ML.py** werden verschiendenen Ansätze illustriert:
-1. Eine Möglichkeit ist es, ein Modell des zu erwartenden Gewinns zu trainieren. Als Grundlage dienen input/output Wertepaare, sogenannte samples. Mit einer großen Menge von solchen Wertenpaaren kann ein Modell, bzw. ein Funktionsapproximation, zwischen Input und Output trainiert werden. Im Anschluss kann ein Optimierer verwendet werden, um die besten (Gewinn maximierenden) Verkaufspreise auf Basis des Gewinnmodells zu bestimmen. <br> Im folgenden Beispiel werden GradientBoosted Decision Trees (n=300, may_depth=10) mit 1e6 Samples trainiert und Simulated Annealing verwendet, um die optimalen Verkaufspreise zu bestimmen: <br> <img src="./images/OptimaleBratwurstStrategie_DT_1e6_10_300_SimAn.jpg" width="50%">
-2. Eine weitere Möglichkeit ist Methoden des sogenannte verstärkende Lernen (Reinforcement learning, RL) zu verwenden. Hierbei werden Wertefunktionen (Value Functions) für die möglichen Aktionen (Verkaufspreise) und Systemzustände (Temperatur, Wochentage) ermittelt. Als Wertefunktion wird der zu erwartenden Gewinn, gegeben der Verkaufspreise und Temperatur/Wochentag, verwendet. Auf Basis der Wertefunktion, gegeben des Systemzustandes, wählt ein sogenannter Handelnder (RL-Agent) Aktionen/Verkaufspreise nach einem vorgegeben Regelwerk (Policy) aus. Die Policy muss hierbei das Ausnutzen des in der Wertefunktion repräsentierten Wissens (Exploitation) mit einem Ausprobieren alternativer Lösungsmöglichkeiten (Exploration) ausbalanzieren. <br> Im folgenden Beispiel wird ein epsilon-greedy (epsilon=0.5, alpha=0.3) RL-Ansatz gewählt. Aufgrund der großen Parameterraumdimensionen, wird die Wertefunktion dynamisch nur für die besten 1000 Strategien im Speicher behalten und die Preise in 5Pf Schritten variiert. <br> <img src="./images/OptimaleBratwurstStrategie_RL_quant_1000_alpha_3_epsilon_5.jpg" width="50%">
-3. Die Kombination der beiden ersten Ansätze, Modellaproximation des erwarteten Gewinns sowie der Einsatz von Reinforcement Learning, wobei ein tiefes neuronales Netzwerk zur Modellaproximation verwendet wird, wird als Deep Reinforcement Learning (DeepRL) bezeichnet. 
-
+1. Eine Möglichkeit ist es, ein Modell des zu erwartenden Gewinns zu trainieren. Als Grundlage dienen Input/Output Wertepaare, sogenannte samples. Mit einer großen Menge von solchen Wertenpaaren kann ein Modell, bzw. ein Funktionsapproximation, zwischen Input und Output trainiert werden. Im Anschluss kann ein Optimierer verwendet werden, um die besten (Gewinn maximierenden) Verkaufspreise auf Basis des Gewinnmodells zu bestimmen. <br> Im folgenden Beispiel werden GradientBoosted Decision Trees (n=300, may_depth=10) mit 1e6 Samples trainiert und Simulated Annealing verwendet, um die optimalen Verkaufspreise zu bestimmen: <br> <img src="./images/OptimaleBratwurstStrategie_DT_1e6_10_300_SimAn.jpg" width="50%">
+2. Eine weitere Möglichkeit ist Methoden des sogenannten verstärkenden Lernens (Reinforcement learning, RL) zu verwenden. Hierbei werden Wertefunktionen (Value Functions) für die möglichen Aktionen (Verkaufspreise) und Systemzustände (Temperatur, Wochentage) ermittelt. Als Wertefunktion wird der zu erwartenden Gewinn, gegeben der Verkaufspreise (Aktion) und Temperatur/Wochentag (Zustand des Systems), verwendet. Auf Basis der Wertefunktion, gegeben des Systemzustandes, wählt ein sogenannter Handelnder (RL-Agent) Aktionen/Verkaufspreise nach einem vorgegeben Regelwerk (Policy) aus. Die Policy muss hierbei das Ausnutzen des in der Wertefunktion repräsentierten Wissens (Exploitation) mit einem Ausprobieren alternativer Lösungsmöglichkeiten (Exploration) ausbalanzieren. <br> Im folgenden Beispiel wird ein epsilon-greedy (epsilon=0.5, alpha=0.3) RL-Ansatz mit Tabellen (tabular solution method) gewählt. Aufgrund der großen Anzahl von möglichen Aktionen (Verkaufspreisen), wird die Wertefunktion dynamisch nur für die besten 1000 Aktionen im Speicher behalten und die Preise in 5Pf Schritten qunatisiert & variiert. <br> <img src="./images/OptimaleBratwurstStrategie_RL_quant_1000_alpha_3_epsilon_5.jpg" width="50%">
+3. Die Kombination der beiden ersten Ansätze, Modellaproximation des erwarteten Gewinns sowie der Einsatz von Reinforcement Learning, wobei ein tiefes neuronales Netzwerk zur Modellapproximation verwendet wird, wird als Deep Reinforcement Learning (DeepRL) bezeichnet. Im Gegensatz zu RL mit Tabellen werden hierbei Nährungen (approximation solution methods) der Wertefunktion verwendet. Ein Beispiellösung mit DeepRL ist noch nicht in **imbiss_ML.py** implementiert. 
 
 
 ## Danksagung 
@@ -83,7 +82,8 @@ https://docplayer.org/44038258-Homecomputer-zur-technik-und-fruehen-computerspie
 [5] C64 Emulator, CCS64 3.9.2, https://www.heise.de/download/product/ccs64/download <br>
 [6] "Imbiss III", Amiga Version von 1987, https://archive.org/details/Imbiss_III_1987_Schwald_O._de_h_Pawlowski_o2 <br>
 [7] "Tom's Imbiss", Amiga OS1.3 Version von 1994/2021 https://www.kehosoft.de/imbiss_hollywood.html <br>
-[8] "Imbiss Classic", Android von 2021, https://play.google.com/store/apps/details?id=de.minibits.imbiss_classic&hl=de&gl=US
+[8] "Imbiss Classic", Android von 2021, https://play.google.com/store/apps/details?id=de.minibits.imbiss_classic&hl=de&gl=US <br>
+[9] Sutton and Barto (2018), "Reinforcement Learning, 2nd edition", MIT Press 
 
 ## Gameplay Videos
 * "Imbiss III", Amiga Version von 1987 https://youtu.be/Xo-Z71IkOe4?t=136<br>
