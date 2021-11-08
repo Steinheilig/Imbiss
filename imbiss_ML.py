@@ -118,7 +118,9 @@ def load_trainings_data(fname='data.npz'):
     return data 
 
 def RL_epsilon_greedy_naive(E=None,V=np.zeros([7,]),epsilon=0.5,Version=3):
-    """ epsilon-greedy RL, naive tabular approach ;) 
+    """ constant-alpha Monte Carlo method with 
+    epsilon-greedy policy 
+    naive tabular approach ;) 
     """
     if E == None:
         #E = np.zeros([49,299,299,299,299,1299,1299,1299], dtype=np.int8)  # expected reward
@@ -138,13 +140,15 @@ def RL_epsilon_greedy_naive(E=None,V=np.zeros([7,]),epsilon=0.5,Version=3):
         else:
             V[element] = np.random.randomint(E.shape()[element+1])
      K_new = Customer_Simulation(V,T,TE,K,Version=3)
-     E[TE,V] = E[TE,V]+alpha*K_new
+     E[TE,V] = E[TE,V]+alpha*K_new  # ToDo: seems odd... check this line of code
     return E      
 
 
 def RL_epsilon_greedy(E=None,V=np.zeros([7,]),epsilon=0.5,Version=3):
-  """ epsilon-greedy RL
+  """ constant-alpha Monte Carlo method with 
+  epsilon-greedy policy
   - dynamic value function table of top <max_mem> sale prices 
+  TODO: rename function
   """
   debug_ = False 
   max_mem = 100 
@@ -199,9 +203,11 @@ def RL_epsilon_greedy(E=None,V=np.zeros([7,]),epsilon=0.5,Version=3):
 
 
 def RL_epsilon_greedy_quantized(E=None,V=None,epsilon=0.2,Version=3):
-  """ epsilon-greedy RL
+  """ constant-alpha Monte Carlo method with 
+  epsilon-greedy policy
   - dynamic value function table of top <max_mem> sale prices 
   - quantization of sale prices 
+  TODO: rename function
   """
   debug_ = False 
   max_mem = 1000   
@@ -290,10 +296,12 @@ def RL_epsilon_greedy_quantized(E=None,V=None,epsilon=0.2,Version=3):
 
 
 def RL_epsilon_greedy_quantized_2ndVersion(E=None,V=None,epsilon=0.5,Version=3):
-  """ epsilon-greedy RL
+  """ constant-alpha Monte Carlo method 
+  with epsilon-greedy policy
   - dynamic value function table of top <max_mem> sale prices 
   - quantization of sale prices 
   - different exploration behavior... 
+  TODO: rename function
   """    
   debug_ = False 
   max_mem = 200   
