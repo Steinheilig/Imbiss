@@ -21,7 +21,7 @@ T. Bauer    1984,   VZ200,      "Imbiss"        *nicht veröffentlicht*<br>
 T. Bauer    1986,   CPC664,     "Imbiss"        *nicht veröffentlicht*<br>
 O. Schwald  1987,   Amiga,      "Imbiss III"<br>
 T. Bauer    1991,   PC,         "Imbiss"<br>
-A. Kern     1994,   Amiga,      "Tom's Imbiss"<br>
+A. Kern     1992,   Amiga,      "Tom's Imbiss"<br>
 A. Kern     2009,   PC,         "Tom's Imbiss"<br>
 A. Kern     2011,   Crossplat*  "Tom's Imbiss"<br>
 L. Brämer   2019,   Amiga,      "Tom's Imbiss"<br>
@@ -86,10 +86,10 @@ https://docplayer.org/44038258-Homecomputer-zur-technik-und-fruehen-computerspie
 [10] Haarnoja et al. (2018), "Soft Actor Critic (SAC) Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor", https://arxiv.org/abs/1801.01290 <br>
 
 ## Gameplay Videos
-* "Imbiss III", Amiga Version von 1987 https://youtu.be/Xo-Z71IkOe4?t=136<br>
 * "Imbiss III", Amiga Version von 1987 https://youtu.be/qTg-1BV26RM<br>
-* Tom's Imbiss 1.0, Amiga 1998, https://youtu.be/7lVctKjUY9g<br>
-* Tom's Imbiss 1.0, Amiga 1998, Teil 2, https://youtu.be/4-wFfIBef5s<br>
+* "Imbiss III", Amiga Version von 1987 https://youtu.be/Xo-Z71IkOe4?t=136<br>
+* Tom's Imbiss 1.0, Amiga 1992, https://youtu.be/7lVctKjUY9g<br>
+* Tom's Imbiss 1.0, Amiga 1992, Teil 2, https://youtu.be/4-wFfIBef5s<br>
 * Tom's Imbiss Imbiss v3.1, Amiga 2012, https://youtu.be/Eho4QnMx3Eg<br>
 
 
