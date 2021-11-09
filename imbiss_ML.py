@@ -6,12 +6,11 @@ Machine Learning applied to defeat a 30 years old DOS game...
 Game mechanics 
 "Imbiss" v. 5.4 by T. Bauer for IBM PC, Public Domain
 
-
 Applying machine learning to find optimal sale prices, i.e. the sale prices optimizing the profit given the current temperature and day of the week. 
 1) a) Using a machine learning model to approximate the profit as a function of current temperature and day of the week.
    b) Employing an optimization strategie to find the optimal sale prices of the profit approximation function 
 2) Employing reinforcement learning strategies to find optimal sale prices
-3) DeepRL -not yet implemented-
+3) DeepRL -> imbiss_RL_gym.py
 
 ToDo:
     Quick& Dirty implementation ... Code refactoring badly needed...
@@ -117,16 +116,16 @@ def load_trainings_data(fname='data.npz'):
     data = dataf["data"]
     return data 
 
-def RL_epsilon_greedy_naive(E=None,V=np.zeros([7,]),epsilon=0.5,Version=3):
-    """ constant-alpha Monte Carlo method with 
-    epsilon-greedy policy 
+def MC_epsilon_greedy_naive(E=None,V=np.zeros([7,]),epsilon=0.5,Version=3):
+    """ constant-alpha Monte Carlo method 
+    with epsilon-greedy policy 
     naive tabular approach ;) 
     """
     if E == None:
         #E = np.zeros([49,299,299,299,299,1299,1299,1299], dtype=np.int8)  # expected reward
         E = np.zeros([49,29,29,29,29,129,129,129], dtype=np.uint8)  # expected reward (min=0 max=255 DM) 
-    T = 0 
-    K = 0
+    T = 0 # set day to monday / weekday
+    K = 0 # balance before selling 
     alpha = 0.1
     TE = np.random.randomint(-9,40)    
     for jj in range (10000):
@@ -140,15 +139,14 @@ def RL_epsilon_greedy_naive(E=None,V=np.zeros([7,]),epsilon=0.5,Version=3):
         else:
             V[element] = np.random.randomint(E.shape()[element+1])
      K_new = Customer_Simulation(V,T,TE,K,Version=3)
-     E[TE,V] = E[TE,V]+alpha*K_new  # ToDo: seems odd... check this line of code
+     E[TE+9,:] = (1-alpha)*E[TE+9,:] + alpha*K_new
     return E      
 
 
-def RL_epsilon_greedy(E=None,V=np.zeros([7,]),epsilon=0.5,Version=3):
-  """ constant-alpha Monte Carlo method with 
-  epsilon-greedy policy
+def MC_epsilon_greedy(E=None,V=np.zeros([7,]),epsilon=0.5,Version=3):
+  """ constant-alpha Monte Carlo method 
+  with epsilon-greedy policy
   - dynamic value function table of top <max_mem> sale prices 
-  TODO: rename function
   """
   debug_ = False 
   max_mem = 100 
@@ -202,12 +200,11 @@ def RL_epsilon_greedy(E=None,V=np.zeros([7,]),epsilon=0.5,Version=3):
 
 
 
-def RL_epsilon_greedy_quantized(E=None,V=None,epsilon=0.2,Version=3):
-  """ constant-alpha Monte Carlo method with 
-  epsilon-greedy policy
+def MC_epsilon_greedy_quantized(E=None,V=None,epsilon=0.2,Version=3):
+  """ constant-alpha Monte Carlo method 
+  with epsilon-greedy policy
   - dynamic value function table of top <max_mem> sale prices 
   - quantization of sale prices 
-  TODO: rename function
   """
   debug_ = False 
   max_mem = 1000   
@@ -233,13 +230,9 @@ def RL_epsilon_greedy_quantized(E=None,V=None,epsilon=0.2,Version=3):
      if debug_:
        print("Temperatur",TE,"epoch",epoch,'returns',E[TE+9,7,0:5])      
      
-     idx = np.argmax(E[TE+9,7,:]) # best result so far 
-     
-     
+     idx = np.argmax(E[TE+9,7,:]) # best result so far           
      Kepochs[epoch_k] = E[TE+9,7,idx]
-     epoch_k += 1 
-     
-     
+     epoch_k += 1           
      if epoch %100== 0:
        print("Temperatur",TE,"epoch",epoch,'max_expected_return',E[TE+9,7,idx],'V',V)      
      if np.random.rand() > epsilon:
@@ -253,8 +246,7 @@ def RL_epsilon_greedy_quantized(E=None,V=None,epsilon=0.2,Version=3):
         V[element] = E[TE+9,element,idx] + np.random.randint(-5,5)*5    
         element = np.random.randint(0,7)
         V[element] = E[TE+9,element,idx] + np.random.randint(-5,5)*5    
-        
-        
+                
         #V = E[TE+9,0:7,idx] + np.random.randint(-25,25,[7,])            
         V[np.where(V<0)]=0
         # check if already in list 
@@ -295,13 +287,12 @@ def RL_epsilon_greedy_quantized(E=None,V=None,epsilon=0.2,Version=3):
   return E, Preisempfehlung, Kepochs
 
 
-def RL_epsilon_greedy_quantized_2ndVersion(E=None,V=None,epsilon=0.5,Version=3):
+def MC_epsilon_greedy_quantized_2ndVersion(E=None,V=None,epsilon=0.5,Version=3):
   """ constant-alpha Monte Carlo method 
   with epsilon-greedy policy
   - dynamic value function table of top <max_mem> sale prices 
   - quantization of sale prices 
   - different exploration behavior... 
-  TODO: rename function
   """    
   debug_ = False 
   max_mem = 200   
@@ -331,9 +322,7 @@ def RL_epsilon_greedy_quantized_2ndVersion(E=None,V=None,epsilon=0.5,Version=3):
      idx = np.argmax(E[TE+9,7,:]) # best result so far 
           
      Kepochs[epoch_k] = E[TE+9,7,idx]
-     epoch_k += 1 
-     
-     
+     epoch_k += 1           
      if epoch %100== 0:
        print("Temperatur",TE,"epoch",epoch,'max_expected_return',E[TE+9,7,idx],'V',V)      
      if np.random.rand() > epsilon:
@@ -351,8 +340,7 @@ def RL_epsilon_greedy_quantized_2ndVersion(E=None,V=None,epsilon=0.5,Version=3):
           V[element] = E[TE+9,element,idx] + np.random.randint(-5,5)*5    
           element = np.random.randint(0,7)
           V[element] = E[TE+9,element,idx] + np.random.randint(-5,5)*5    
-        
-        
+                
           #V = E[TE+9,0:7,idx] + np.random.randint(-25,25,[7,])            
           V[np.where(V<0)]=0
           # check if already in list 
@@ -403,8 +391,7 @@ def Customer_Simulation(V,T,TE,K,Version=3):
                3) "Imbiss" von T. Bauer 1991 für PC
 
     Returns:
-      K: Kontostand nach der Simulation
-      
+      K: Kontostand nach der Simulation      
     """
     debug_ = False
     if Version <3:
@@ -564,8 +551,7 @@ def Customer_Simulation(V,T,TE,K,Version=3):
                        BK -= 1; kauf = True  
                        break
                 K = Kaufen(6,V,S,K)  
-                BK -= 1; kauf = True      
-            
+                BK -= 1; kauf = True                  
     return K
 
 
@@ -742,12 +728,12 @@ plt.show()
 
 #%%
 # =============================================================================
-# 2) Employing reinforcement learning strategies to find optimal sale prices
+# 2) Employing reinforcement learning strategies to find optimal sales prices
 # =============================================================================
 
-# E, Preisempfehlung = RL_epsilon_greedy(V=np.array([100,100,100,100,550,150,150]))
+# E, Preisempfehlung = MC_epsilon_greedy(V=np.array([100,100,100,100,550,150,150]))
 # np.savez("Preisempfehlung_RL_100_alpha_4.npz",Preisempfehlung= Preisempfehlung)
-E, Preisempfehlung, Kepochs = RL_epsilon_greedy_quantized_2ndVersion(V=np.array([100,100,100,100,550,150,150]))
+E, Preisempfehlung, Kepochs = MC_epsilon_greedy_quantized_2ndVersion(V=np.array([100,100,100,100,550,150,150]))
 np.savez("Preisempfehlung_RL_quant_5_200_alpha_2_epsilon_5_2ndVersion_40kepochs.npz",Preisempfehlung= Preisempfehlung)
  
 data = np.load('Bratwurst_Wochentag_Optimal.npz')
@@ -780,5 +766,3 @@ plt.xlabel('epoch [#]')
 plt.title('RL Performance -Wochentag-')
 plt.savefig('OptimaleBratwurstStrategie_RL_perform_RL_quant_5_200_alpha_2_epsilon_2_2ndVersion_40kepochs.jpg', dpi=600)
 plt.show()
-
-
