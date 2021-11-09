@@ -103,8 +103,8 @@ class ImbissEnv(gym.Env):
                 BK -= int(np.min(V[5:7])/20) # bugfix!!
                 
                 # Temperatur Korrektur
-                EK += abs(int(TE/2))
-                BK -= abs(int(TE/2))
+                EK += int(TE/2)
+                BK -= int(TE/2)
             else:
                 ##### "Imbiss" PC 1991 
                 # 5 Änderungen zum Orginal:
@@ -131,8 +131,8 @@ class ImbissEnv(gym.Env):
                 BK -= int(np.max(V[5:7])/20)  # bugfix!!
                 
                 # Temperatur Korrektur
-                EK += abs(int(TE/4))
-                BK -= abs(int(TE/3))
+                EK += int(TE/4)
+                BK -= int(TE/3)
                 
             # zu hoher Preis in einer Warengruppe (neg Kundenwert) führt nicht(!) zu einer Reduktion der Gesamtzahl der Kunden
             if BK < 0:
