@@ -34,11 +34,11 @@ Linux (arm) Linux (ppc) macOS (x86) macOS (x64) macOS (ppc)
 MorphOS (ppc) WarpOS (m68k/ppc) Windows (x86) Windows (x64)
 
 ## Bugs: Versionen 1983/1984/1991
-* "Kaufen koste es was es wolle" in den Spielversionen von 1983/1984
+* "Kaufen koste es was es wolle" in den Spielversionen von 1983/1984:<br>
 Der maximale Preis der verschiedenen Eissorten wird nicht geprüft, dadurch kann in 10% der Eiskauffälle eine Eissorte mit beliebig hohen Verkaufspreis verkauft werden.
-* "Cola Bug" in den Spielversionen von 1983/1984
+* "Cola Bug" in den Spielversionen von 1983/1984:<br>
 Kein Einfluss des Colapreises auf Kundenverhalten. Colakunden sind zufällige Eiskunden UND keine Prüfung von Colapreis!
-* "Bratwurst Anomalie" in der Spielversion von 1991:
+* "Bratwurst Anomalie" in der Spielversion von 1991:<br>
 Wird der Verkaufspreis einer Ware aus einer Warengruppe zu hoch angesetzt (z.B. die Cola oder die Bratwurst), 
 werden die anderen Elemente der Warengruppe nicht mehr nachgefragt (da es keine Kunden gibt). 
 Also können z.B. alle Eissorten beliebig billig angeboten werden, sobald die Cola mehr als X(T,Wochentag) kostet, wird kein Eis mehr verkauft. 
