@@ -28,14 +28,14 @@ import matplotlib.pyplot as plt #
 from stable_baselines.sac.policies import MlpPolicy
 from stable_baselines import SAC
 
-learning_ = True 
+learning_ = False 
 if learning_:
  # ToDO: https://stable-baselines3.readthedocs.io/en/master/common/logger.html -> to TXT -> figure reward(timesteps)
- model = SAC(MlpPolicy, env, gamma=0.01, learning_rate = 0.001, verbose=1)  # learning rate (super low 3e-4) -> increase?
- model.learn(total_timesteps=int(1e5), log_interval=1000)
- model.save("sac_imbiss")
+ model = SAC(MlpPolicy, env, gamma=0.001, learning_rate = 0.0005, verbose=1)  # learning rate (super low 3e-4) -> increase?
+ model.learn(total_timesteps=int(2e5), log_interval=1000)
+ model.save("sac_imbiss_g001_lr0005_t2e5")
 else:
- model = SAC.load("sac_imbiss")
+ model = SAC.load("sac_imbiss_g001_lr0005_t2e5")
 
 #%%
 obs = env.reset()
@@ -61,7 +61,7 @@ for TE in range(-9,40):
     print("TE:",TE,"Actions:",action)
     Preisempfehlung[TE+9,:] = action
 
-np.savez("Preisempfehlung_SAC.npz",Preisempfehlung= Preisempfehlung)
+np.savez("Preisempfehlung_SAC_g001_lr0005_t2e5.npz",Preisempfehlung= Preisempfehlung)
  
 data = np.load('Bratwurst_Wochentag_Optimal.npz')
 Preisempfehlung_GT = data["Preisempfehlung"]
@@ -81,13 +81,13 @@ plt.ylabel('Verkaufspreis [pf]')
 plt.xlabel('Temperatur [°C]')
 plt.title('Optimale Bratwurst Strategie -Wochentag-')
 plt.legend(['Optimal','Bratwurst (SAC)','Fritten (SAC)'])
-plt.savefig('OptimaleBratwurstStrategie_SAC.jpg', dpi=600)
+plt.savefig('OptimaleBratwurstStrategie_SAC_g001_lr0005_t2e5.jpg', dpi=600)
 
 plt.ylabel('Sales Price [Cent]')
 plt.xlabel('Temperature [°C]')
 plt.title('Optimal Bratwurst Strategy -Weekday-')
 plt.legend(['Optimal','Bratwurst (SAC)','French Fries (SAC)'])
-plt.savefig('OptimaleBratwurstStrategie_SAC_EN.jpg', dpi=600)
+plt.savefig('OptimaleBratwurstStrategie_SAC_g001_lr0005_t2e5_EN.jpg', dpi=600)
 
 plt.show()    
    
