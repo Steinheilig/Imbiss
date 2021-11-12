@@ -4,12 +4,12 @@
 Machine Learning applied to defeat a 30 years old DOS game... 
 
 Game mechanics 
-"Imbiss" v. 5.4 by T. Bauer for IBM PC, Public Domain
+"Imbiss" v. 5.4 by T. Bauer for IBM PC, 1991, Public Domain
 
-Applying machine learning to find optimal sale prices, i.e. the sale prices optimizing the profit given the current temperature and day of the week. 
-1) a) Using a machine learning model to approximate the profit as a function of current temperature and day of the week.
-   b) Employing an optimization strategie to find the optimal sale prices of the profit approximation function 
-2) Employing reinforcement learning strategies to find optimal sale prices
+Applying machine learning to find optimal sales prices, i.e. the sales prices optimizing the profit given the current temperature and day of the week. 
+1) a) Using a machine learning model to approximate the profit as a function of sales prices, current temperature and day of the week.
+   b) Employing an optimization strategie to find the optimal sales prices of the profit approximation function 
+2) Employing reinforcement learning strategies to find optimal sales prices
 3) DeepRL -> imbiss_RL_gym.py
 
 ToDo:
@@ -29,6 +29,9 @@ import pickle
 import matplotlib.pyplot as plt #
 from scipy import optimize
 import time
+
+#import os
+#os.chdir('C:\EigeneLokaleDaten\Imbiss\git\Imbiss-main\Imbiss-main') # set current working dir if needed 
 
 def DT_train(data):
     """ Train a ensemble of decision trees for model approximation of the profit as a function of current temperature and day of the week
@@ -59,19 +62,18 @@ def MLP_train(data):
 
 
 def Kaufen(WS,V,S,K):  
-    """ reduced game mechanics for buying (DE: "kaufen")
+    """ reduced game mechanics for customer buying (DE: "kaufen")
     """
     debug_ = False 
     H = [10,10,10,20,200,35,55]  # lowest price possible 
     H = [10,10,10,20,200,50,70]  # good price..
     if debug_:
       Waren = ['Schokoeis','Vanilleeis','Erdbeereis','Cola','Zigaretten','Bratwurst','Pommes']
-      print('Kunde: Könnten Sie mir bitte',S,Waren[WS],'geben')
-      
+      print('Kunde: Könnten Sie mir bitte',S,Waren[WS],'geben')      
     return K + S*V[WS] - S*H[WS]
 
 def get_sample(OnlyWeekdays=True):
-    """ generate a random sample, sale prices set randomly
+    """ generate a random sample, sales prices set randomly
     """
     debug_ = False
     K = 0          # money [Pf]
@@ -98,7 +100,8 @@ def get_sample(OnlyWeekdays=True):
     return sample
 
 def get_trainings_data(N,fname='data.npz',OnlyWeekdays=True):
-    """ generate a training set of random samples (sale prices set randomly)
+    """ generate a training set of random sampless (sale prices set randomly)
+    and store it in fname
     """
     print("Generate Trainings Data Set N=",N)
     data = np.zeros([N,11],dtype=int)
@@ -154,8 +157,7 @@ def MC_epsilon_greedy(E=None,V=np.zeros([7,]),epsilon=0.5,Version=3):
         E = np.zeros([49,8,max_mem], dtype=np.int16)  # expected reward (min=0 max=255 DM) 
   T = 0 
   K = 0
-  alpha = 0.4    
-        
+  alpha = 0.4            
   for TE in range(-9,40):    
     for epoch in range (20000):
      #TE = np.random.randint(-9,40)
@@ -194,8 +196,7 @@ def MC_epsilon_greedy(E=None,V=np.zeros([7,]),epsilon=0.5,Version=3):
   for TE in range(-9,40):
       idx = np.argmax(E[TE+9,7,:]) # best result so far 
       print(TE,E[TE+9,0:7,idx])
-      Preisempfehlung[TE+9,:] = E[TE+9,0:7,idx]
-      
+      Preisempfehlung[TE+9,:] = E[TE+9,0:7,idx]      
   return E, Preisempfehlung
 
 
@@ -213,8 +214,8 @@ def MC_epsilon_greedy_quantized(E=None,V=None,epsilon=0.2,Version=3):
   alpha = 0.2   
 
   epoch_k = 0 
-  Kepochs = np.zeros([49*20000,])
-  
+  Kepochs = np.zeros([49*20000,])  
+
   if E == None:
         E = np.zeros([49,8,max_mem], dtype=np.int16)  # expected reward (min=0 max=255 DM) 
         for TE in range(-9,40):
@@ -382,37 +383,37 @@ def MC_epsilon_greedy_quantized_2ndVersion(E=None,V=None,epsilon=0.5,Version=3):
 
 
 def Customer_Simulation(V,T,TE,K,Version=3):
-    """ Spielmechanik - Kunden Simulation
+    """ Game mechanics - customer simulation / Spielmechanik - Kunden Simulation 
 
     Args:
-      K: Kontostand vor der Simulation
+      K: Cash before / Kontostand vor der Simulation
       Version: 1) "Imbiss-Bude" von F. Brall 1983 für Apple II
                2) "Imbiss" von O. Schwald 1984 für Commodore C64
                3) "Imbiss" von T. Bauer 1991 für PC
 
     Returns:
-      K: Kontostand nach der Simulation      
+      K: Cash after / Kontostand nach der Simulation      
     """
     debug_ = False
     if Version <3:
-        EK = 10  # Eis Kunden
-        ZK = 10  # Zigaretten Kunden 
+        EK = 10  # ice customer / Eis Kunden
+        ZK = 10  # cigarettes customer / Zigaretten Kunden 
         BK = 30  # Bratwurst Kunden 
-        if T == 6:  # Samstag
+        if T == 6:  # saturday / Samstag
            EK = 15
            ZK = 13
            BK = 40
-        if T == 7:  # Sonntag
+        if T == 7:  # sunday / Sonntag
            EK = 20
            ZK = 18
            BK = 40
         
-        # Korrektur der Kunden als Funktion des Preise 
+        # correct customer number as function of sales prices / Korrektur der Kunden als Funktion des Preise 
         EK -= int(np.min(V[0:3])/10) # bugfix!!
         ZK -= int(V[4]/100)
         BK -= int(np.min(V[5:7])/20) # bugfix!!
         
-        # Temperatur Korrektur
+        # temperature correction/  Temperatur Korrektur
         EK += int(TE/2)
         BK -= int(TE/2)
     else:
@@ -558,24 +559,32 @@ def Customer_Simulation(V,T,TE,K,Version=3):
 
 #%%
 # =============================================================================
-# 1) a) Using a machine learning model to approximate the profit as a function of current temperature and day of the week.
-#    b) Employing an optimization strategie to find the optimal sale prices of the profit approximation function . 
+# 1) a) Using a machine learning model to approximate the profit as a function 
+#       of current temperature, day of the week & sales prices (f(TE,T,V).
+#    b) Employing an optimization strategie to find the optimal sale prices 
+#       of the profit approximation function. 
 # =============================================================================
 
-generate_training_sets = False # if not yet generated...
-train_ML_clf = False
-train_DT_clf = False
-save_clf = True # if clf was trained... 
-load_clf = True
+generate_training_sets = False # generated training data for machine learning model of f(TE,T,V)
+train_MLP_clf = False          # train a multilayer perceptron (MLP) to approximate f(TE,T,V)
+train_DT_clf = False           # train a decition tree (DT) to approximate f(TE,T,V)
 
+save_clf = True                # save trained models to file
+load_MLP_clf = False           # load MLP model
+load_DT_clf = True             # load DT model
+
+if load_MLP_clf and load_DT_clf:
+  print("Chose only one model to load")
+  print("set default DT...")
+  load_MLP_clf = False
 
 if generate_training_sets:
-  get_trainings_data(1000,fname='C:/EigeneLokaleDaten/Imbiss/Python-Implementation/data_1000.npz')
+  get_trainings_data(1000,fname='data_1000.npz')
   get_trainings_data(10000,fname='data_10000.npz')
   get_trainings_data(100000,fname='data_100000.npz')
   get_trainings_data(1000000,fname='data_1000000.npz')
 
-if train_ML_clf:
+if train_MLP_clf:
   filename = 'MLP_model_1e6_shallower.sav'
   data = load_trainings_data('data_1000000.npz')
   data[:,1] = np.zeros([1000000,])
@@ -601,13 +610,17 @@ if train_DT_clf:
     # save the model to disk
     pickle.dump(clf, open(filename, 'wb'))
 
-if load_clf:
+if load_MLP_clf:
   filename = 'MLP_model_1e6_shallower.sav'
   clf = pickle.load(open(filename, 'rb'))
   print(clf.predict(np.array([[0,0,38,99,99,99,99,2299,199,199]]))) 
   print(Customer_Simulation(V=np.array([99,99,99,99,2299,199,199]),T=0,TE=38,K=0,Version=3))
   print(clf.predict(np.array([[0,0,-9,0,0,0,0,0,59,59]])))
   print(Customer_Simulation(V=np.array([0,0,-9,0,0,59,59]),T=0,TE=38,K=0,Version=3))
+
+if load_DT_clf:
+  filename = 'MLP_model_1e6_DT_10_300.sav'
+  clf = pickle.load(open(filename, 'rb'))
 
 def model_prediction(V):
     sample = np.zeros([10,])
@@ -648,7 +661,6 @@ for TE in range(-9,40):
     jj+=1
     print("took",elapsed)
     
-
 data = np.load('Bratwurst_Wochentag_Optimal.npz')
 Preisempfehlung_GT = data["Preisempfehlung"]
 
@@ -669,6 +681,11 @@ plt.legend(['Optimal','Bratwurst ML','Fritten ML'])
 plt.savefig('OptimaleBratwurstStrategie_DT_1e6_10_300_SimAn.jpg', dpi=600)
 plt.show()
 
+plt.ylabel('sales price [pf]')
+plt.xlabel('temperature [°C]')
+plt.title('optimal Bratwurst strategy -weekday-')
+plt.legend(['optimal','Bratwurst ML','French fries ML'])
+plt.savefig('OptimaleBratwurstStrategie_DT_1e6_10_300_SimAn_EN.jpg', dpi=600)
 
 ## Beste Bratwurstsrategie als Funktion der Temperatur
 Erwarteter_Gewinn = np.zeros([49,600,600])
@@ -697,7 +714,8 @@ for TE in range(-9,40):
 
 # remove negative values
 Erwarteter_Gewinn[np.where(Erwarteter_Gewinn<0)]=0
-    
+np.savez('OptimaleBratwurstStrategie_DT_1e6_10_300_EN.npz',Erwarteter_Gewinn=Erwarteter_Gewinn)
+
 # find max values 
 for TE in range(-9,40):
   idx = np.argmax(Erwarteter_Gewinn[TE+9,:,:])    
@@ -723,8 +741,13 @@ plt.xlabel('Temperatur [°C]')
 plt.title('Optimale Bratwurst Strategie -Wochentag-')
 plt.legend(['Optimal','Bratwurst ML','Fritten ML'])
 plt.savefig('OptimaleBratwurstStrategie_DT_1e6_10_300.jpg', dpi=600)
-plt.show()
 
+plt.ylabel('sales price [pf]')
+plt.xlabel('temperature [°C]')
+plt.title('optimal Bratwurst strategy -weekday-')
+plt.legend(['optimal','Bratwurst ML','French fries ML'])
+plt.savefig('OptimaleBratwurstStrategie_DT_1e6_10_300_EN.jpg', dpi=600)
+plt.show()
 
 #%%
 # =============================================================================
@@ -735,7 +758,8 @@ plt.show()
 # np.savez("Preisempfehlung_RL_100_alpha_4.npz",Preisempfehlung= Preisempfehlung)
 E, Preisempfehlung, Kepochs = MC_epsilon_greedy_quantized_2ndVersion(V=np.array([100,100,100,100,550,150,150]))
 np.savez("Preisempfehlung_RL_quant_5_200_alpha_2_epsilon_5_2ndVersion_40kepochs.npz",Preisempfehlung= Preisempfehlung)
- 
+
+#%%
 data = np.load('Bratwurst_Wochentag_Optimal.npz')
 Preisempfehlung_GT = data["Preisempfehlung"]
 
@@ -755,8 +779,13 @@ plt.xlabel('Temperatur [°C]')
 plt.title('Optimale Bratwurst Strategie -Wochentag-')
 plt.legend(['Optimal','Bratwurst RL','Fritten RL'])
 plt.savefig('OptimaleBratwurstStrategie_RL_quant_5_200_alpha_2_epsilon_5_2ndVersion_40kepochs.jpg', dpi=600)
-plt.show()
 
+plt.ylabel('sales price [pf]')
+plt.xlabel('temperature [°C]')
+plt.title('optimal Bratwurst strategy -weekday-')
+plt.legend(['optimal','Bratwurst ML','French fries ML'])
+plt.savefig('OptimaleBratwurstStrategie_RL_quant_5_200_alpha_2_epsilon_5_2ndVersion_40kepochs_EN.jpg', dpi=600)
+plt.show()
 
 fig = plt.figure()
 plt.plot(Kepochs/1e2,color='black')
