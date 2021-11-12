@@ -3,7 +3,7 @@
 Machine Learning applied to defeat a 30 years old DOS game... 
 
 Game mechanics 
-"Imbiss" v. 5.4 by T. Bauer for IBM PC, Public Domain
+"Imbiss" v. 5.4 by T. Bauer for IBM PC, 1991, Public Domain
 
 Soft Actor Critic (SAC) Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor.
 Box Actions - discrete states possible... 
@@ -82,6 +82,13 @@ plt.xlabel('Temperatur [°C]')
 plt.title('Optimale Bratwurst Strategie -Wochentag-')
 plt.legend(['Optimal','Bratwurst (SAC)','Fritten (SAC)'])
 plt.savefig('OptimaleBratwurstStrategie_SAC.jpg', dpi=600)
+
+plt.ylabel('Sales Price [Cent]')
+plt.xlabel('Temperature [°C]')
+plt.title('Optimal Bratwurst Strategy -Weekday-')
+plt.legend(['Optimal','Bratwurst (SAC)','French Fries (SAC)'])
+plt.savefig('OptimaleBratwurstStrategie_SAC_EN.jpg', dpi=600)
+
 plt.show()    
    
 #%% 
